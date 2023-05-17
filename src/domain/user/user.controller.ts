@@ -6,6 +6,7 @@ import { type NotFoundError } from '../../infra/errors/notFoundError'
 import { type AlreadyExistsError } from '../../infra/errors/alreadyExistsError'
 import { LoginUserService } from './user.login.service'
 import { FindUserByIDService } from './user.findbyid.service'
+import { DeleteUserService } from './user.delete.service'
 
 class UserController {
   async create (
@@ -92,6 +93,23 @@ class UserController {
       const httpError: NotFoundError = error as NotFoundError
 
       return response.status(httpError.status).json({ error: httpError.message })
+    }
+  }
+
+  async delete (request: Request,
+    response: Response
+  ): Promise<Response<any, Record<string, any>>> {
+    const prismaUserRepository = new PrismaUserRepository()
+    const deleteUserService = new DeleteUserService(prismaUserRepository)
+
+    const { id } = request.params
+
+    try {
+      const deletedUser = await deleteUserService.execute(id)
+
+      return response.status(200).json(deletedUser)
+    } catch (error) {
+      return response.status(400).json({ error: 'Failed to delete user' })
     }
   }
 }
