@@ -8,6 +8,7 @@
     "build": "rimraf dist && swc ./src -d dist",
     "start": "node ./dist/infra/main.js",
     "start:docker": "npm run build && npm run start",
+    "build:render": "npm install && npx tsc && npx prisma migrate deploy",
     "dev": "nodemon --legacy-watch --ignore ./node_modules ./src/infra/main.ts"
   },
   "keywords": [],
