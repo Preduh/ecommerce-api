@@ -1,6 +1,6 @@
-class NotFoundError extends Error {
-  public status: number
+import { HttpError } from './httpError'
 
+class NotFoundError extends HttpError {
   constructor (message: string) {
     super(message)
 

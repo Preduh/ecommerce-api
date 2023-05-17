@@ -1,13 +1,13 @@
 import { HttpError } from './httpError'
 
-class AlreadyExistsError extends HttpError {
+class InvalidParamsError extends HttpError {
   constructor (message: string) {
     super(message)
 
     this.message = message
-    this.name = 'AlreadyExists'
+    this.name = 'InvalidParams'
     this.status = 400
   }
 }
 
-export { AlreadyExistsError }
+export { InvalidParamsError }

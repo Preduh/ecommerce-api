@@ -1,7 +1,7 @@
 import { type User } from '@prisma/client'
 import { v4 as uuid } from 'uuid'
 import { prismaClient } from '../../../database/prismaClient'
-import { type CreateUserDTO, type UserRepository } from './UserRepository'
+import { type UpdateUserDTO, type CreateUserDTO, type UserRepository } from './UserRepository'
 
 export class PrismaUserRepository implements UserRepository {
   async createUser ({
@@ -69,5 +69,18 @@ export class PrismaUserRepository implements UserRepository {
     })
 
     return user
+  }
+
+  async updateUser (user: UpdateUserDTO): Promise<User> {
+    const updatedUser = await prismaClient.user.update({
+      where: {
+        id: user.id
+      },
+      data: {
+        ...user
+      }
+    })
+
+    return updatedUser
   }
 }

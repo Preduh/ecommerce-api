@@ -1,12 +1,12 @@
 import { type Request, type Response } from 'express'
 import { PrismaUserRepository } from './repositories/PrismaUserRepository'
 import { CreateUserService } from './user.create.service'
-import { FindAllUserService } from './user.findall.service'
-import { type NotFoundError } from '../../infra/errors/notFoundError'
-import { type AlreadyExistsError } from '../../infra/errors/alreadyExistsError'
-import { LoginUserService } from './user.login.service'
-import { FindUserByIDService } from './user.findbyid.service'
 import { DeleteUserService } from './user.delete.service'
+import { FindAllUserService } from './user.findall.service'
+import { FindUserByIDService } from './user.findbyid.service'
+import { LoginUserService } from './user.login.service'
+import { UpdateUserService } from './user.update.service'
+import { type HttpError } from '../../infra/errors/httpError'
 
 class UserController {
   async create (
@@ -29,7 +29,7 @@ class UserController {
 
       return response.status(201).json(user)
     } catch (error) {
-      const httpError: AlreadyExistsError = error as AlreadyExistsError
+      const httpError: HttpError = error as HttpError
 
       return response.status(httpError.status).json({ error: httpError.message })
     }
@@ -47,7 +47,7 @@ class UserController {
 
       return response.status(200).json(users)
     } catch (error) {
-      const httpError: NotFoundError = error as NotFoundError
+      const httpError: HttpError = error as HttpError
 
       return response.status(httpError.status).json({ error: httpError.message })
     }
@@ -70,7 +70,7 @@ class UserController {
 
       return response.status(200).json(user)
     } catch (error) {
-      const httpError: NotFoundError = error as NotFoundError
+      const httpError: HttpError = error as HttpError
 
       return response.status(httpError.status).json({ error: httpError.message })
     }
@@ -90,7 +90,7 @@ class UserController {
 
       return response.status(200).json(user)
     } catch (error) {
-      const httpError: NotFoundError = error as NotFoundError
+      const httpError: HttpError = error as HttpError
 
       return response.status(httpError.status).json({ error: httpError.message })
     }
@@ -109,7 +109,29 @@ class UserController {
 
       return response.status(200).json(deletedUser)
     } catch (error) {
-      return response.status(400).json({ error: 'Failed to delete user' })
+      const httpError: HttpError = error as HttpError
+
+      return response.status(httpError.status).json({ error: httpError.message })
+    }
+  }
+
+  async update (request: Request,
+    response: Response
+  ): Promise<Response<any, Record<string, any>>> {
+    const prismaUserRepository = new PrismaUserRepository()
+    const updateUserService = new UpdateUserService(prismaUserRepository)
+
+    const { id } = request.params
+    const { body } = request
+
+    try {
+      const updatedUser = await updateUserService.execute({ id, ...body })
+
+      return response.status(200).json(updatedUser)
+    } catch (error) {
+      const httpError: HttpError = error as HttpError
+
+      return response.status(httpError.status).json({ error: httpError.message })
     }
   }
 }

@@ -8,6 +8,14 @@ export interface CreateUserDTO {
   password: string
 }
 
+export interface UpdateUserDTO {
+  id: string
+  firstName?: string
+  lastName?: string
+  email?: string
+  mobile?: string
+}
+
 // A user without your password
 export interface UserWithoutPassword {
   id: string
@@ -27,4 +35,5 @@ export interface UserRepository {
   findUserByMobile: (mobile: string) => Promise<User | null>
   findUserById: (id: string) => Promise<User | null>
   deleteUser: (id: string) => Promise<User | null>
+  updateUser: (user: UpdateUserDTO) => Promise<User>
 }
