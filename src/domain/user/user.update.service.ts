@@ -1,5 +1,6 @@
 import { AlreadyExistsError } from '../../infra/errors/alreadyExistsError'
 import { InvalidParamsError } from '../../infra/errors/invalidParamsError'
+import { NotFoundError } from '../../infra/errors/notFoundError'
 import {
   type UpdateUserDTO,
   type UserRepository,
@@ -56,6 +57,10 @@ class UpdateUserService {
       lastName,
       mobile
     })
+
+    if (updatedUser === null) {
+      throw new NotFoundError('User not found')
+    }
 
     return {
       id: updatedUser.id,

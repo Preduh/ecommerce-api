@@ -6,7 +6,7 @@ class NotFoundError extends HttpError {
 
     this.message = message
     this.name = 'NotFoundError'
-    this.status = 400
+    this.status = 404
   }
 }
 
