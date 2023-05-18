@@ -4,7 +4,7 @@
     "lib": [
       "ESNext"
     ],
-    "outDir": "dist"
+    "outDir": "dist",
   },
   "include": [
     "src",
@@ -13,5 +13,7 @@
   "exclude": [
     "node_modules",
     "**/*.test.ts",
+    "**/*.spec.ts",
+    "vitest.config.ts"
   ],
 }
