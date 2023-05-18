@@ -68,7 +68,7 @@ class UpdateUserService {
       firstName: updatedUser.firstName,
       lastName: updatedUser.lastName,
       mobile: updatedUser.mobile,
-      isAdmin: updatedUser.isAdmin,
+      role: updatedUser.role,
       createdAt: updatedUser.createdAt,
       updatedAt: updatedUser.updatedAt
     }

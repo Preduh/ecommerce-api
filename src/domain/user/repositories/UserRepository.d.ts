@@ -4,7 +4,7 @@ export interface User {
   lastName: string
   email: string
   mobile: string
-  isAdmin: string
+  role: string
   password: string
   createdAt: Date
   updatedAt: Date
@@ -33,7 +33,7 @@ export interface UserWithoutPassword {
   lastName: string
   email: string
   mobile: string
-  isAdmin: string
+  role: string
   createdAt: Date
   updatedAt: Date
 }

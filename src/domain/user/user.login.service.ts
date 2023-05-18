@@ -41,7 +41,7 @@ class LoginUserService {
         firstName: user.firstName,
         lastName: user.lastName,
         mobile: user.mobile,
-        isAdmin: user.isAdmin,
+        role: user.role,
         createdAt: user.createdAt,
         updatedAt: user.updatedAt
       },

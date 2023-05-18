@@ -15,7 +15,7 @@ export class InMemoryUserRepository implements UserRepository {
       id: uuid(),
       firstName,
       lastName,
-      isAdmin: 'user',
+      role: 'user',
       email,
       mobile,
       password,

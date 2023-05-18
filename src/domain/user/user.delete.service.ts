@@ -22,7 +22,7 @@ class DeleteUserService {
       firstName: findUser.firstName,
       lastName: findUser.lastName,
       mobile: findUser.mobile,
-      isAdmin: findUser.isAdmin,
+      role: findUser.role,
       createdAt: findUser.createdAt,
       updatedAt: findUser.updatedAt
     }
