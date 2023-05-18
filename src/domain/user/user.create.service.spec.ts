@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { CreateUserService } from './user.create.service'
 import { InMemoryUserRepository } from './repositories/InMemoryRepository'
+import { AlreadyExistsError } from '../../infra/errors/alreadyExistsError'
 
 describe('Create user', () => {
   it('should be able to create a new user', async () => {
@@ -17,5 +18,28 @@ describe('Create user', () => {
 
     expect(user).toHaveProperty('id')
     expect(token).toBeDefined()
+  })
+
+  it('should not be able to create a new user with an existing email', async () => {
+    const inMemoryUserRepository = new InMemoryUserRepository()
+    const createUserService = new CreateUserService(inMemoryUserRepository)
+
+    await createUserService.execute({
+      email: 'any@mail.com',
+      firstName: 'Any firstname',
+      lastName: 'Any lastname',
+      mobile: '38999999999',
+      password: 'Any password'
+    })
+
+    await expect(
+      createUserService.execute({
+        email: 'any@mail.com',
+        firstName: 'Another firstname',
+        lastName: 'Another lastname',
+        mobile: '38999999999',
+        password: 'Another password'
+      })
+    ).rejects.toEqual(new AlreadyExistsError('This email already exists'))
   })
 })
