@@ -11,12 +11,15 @@
     "build:render": "npm install && npm run build && npx prisma migrate deploy",
     "dev": "nodemon --legacy-watch --ignore ./node_modules ./src/infra/main.ts",
     "lint": "eslint ./src/**/*.ts --fix",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "commitlint": "npx commitlint"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@commitlint/cli": "^17.6.3",
+    "@commitlint/config-conventional": "^17.6.3",
     "@tsconfig/node18": "^2.0.1",
     "@types/bcrypt": "^5.0.0",
     "@types/express": "^4.17.17",
