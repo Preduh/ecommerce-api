@@ -5,12 +5,13 @@
   "main": "main.js",
   "scripts": {
     "test": "vitest",
-    "build": "rimraf dist && tsc --project tsconfig.build.json",
+    "build": "npm run lint && rimraf dist && tsc --project tsconfig.build.json",
     "start": "node ./dist/infra/main.js",
     "start:docker": "npm run build && npm run start",
-    "build:render": "npm install && npx tsc && npx prisma migrate deploy",
+    "build:render": "npm install && npm run build && npx prisma migrate deploy",
     "dev": "nodemon --legacy-watch --ignore ./node_modules ./src/infra/main.ts",
-    "lint": "eslint ./src/**/*.ts --fix"
+    "lint": "eslint ./src/**/*.ts --fix",
+    "prepare": "husky install"
   },
   "keywords": [],
   "author": "",
@@ -28,6 +29,7 @@
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-n": "^15.7.0",
     "eslint-plugin-promise": "^6.1.1",
+    "husky": "^8.0.3",
     "nodemon": "^2.0.22",
     "prisma": "^4.14.0",
     "rimraf": "^5.0.0",
