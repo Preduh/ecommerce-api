@@ -81,4 +81,19 @@ describe('Create user', () => {
       })
     ).rejects.toEqual(new MissingParamError('Missing param: firstName'))
   })
+
+  it('should not be able to create a new user if lastname is empty', async () => {
+    const inMemoryUserRepository = new InMemoryUserRepository()
+    const createUserService = new CreateUserService(inMemoryUserRepository)
+
+    await expect(
+      createUserService.execute({
+        email: 'any@mail.com',
+        firstName: 'Any firstname',
+        lastName: '',
+        mobile: '38999999999',
+        password: 'Any password'
+      })
+    ).rejects.toEqual(new MissingParamError('Missing param: lastName'))
+  })
 })

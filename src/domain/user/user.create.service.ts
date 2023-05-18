@@ -15,16 +15,29 @@ interface CreateResponseDTO {
   token: string
 }
 
+type UserDTOKeys = 'firstName' | 'lastName' | 'email' | 'mobile' | 'password'
+
 class CreateUserService {
   constructor (private readonly userRepository: UserRepository) {}
 
-  async execute ({
-    email,
-    firstName,
-    lastName,
-    password,
-    mobile
-  }: CreateUserDTO): Promise<CreateResponseDTO> {
+  async execute (userDTO: CreateUserDTO): Promise<CreateResponseDTO> {
+    // Check if param is empty or undefined
+    Object.keys(userDTO).forEach((key) => {
+      const userDTOKeys = key as UserDTOKeys
+
+      if (userDTO[userDTOKeys] === undefined || userDTO[userDTOKeys] === '') {
+        throw new MissingParamError(`Missing param: ${key}`)
+      }
+    })
+
+    const {
+      email,
+      firstName,
+      lastName,
+      password,
+      mobile
+    } = userDTO
+
     if (firstName === undefined || firstName === '') {
       throw new MissingParamError('Missing param: firstName')
     }
