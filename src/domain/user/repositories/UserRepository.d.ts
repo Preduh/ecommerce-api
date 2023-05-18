@@ -1,4 +1,14 @@
-import { type User } from '@prisma/client'
+export interface User {
+  id: string
+  firstName: string
+  lastName: string
+  email: string
+  mobile: string
+  isAdmin: string
+  password: string
+  createdAt: Date
+  updatedAt: Date
+}
 
 export interface CreateUserDTO {
   firstName: string
@@ -35,5 +45,5 @@ export interface UserRepository {
   findUserByMobile: (mobile: string) => Promise<User | null>
   findUserById: (id: string) => Promise<User | null>
   deleteUser: (id: string) => Promise<User | null>
-  updateUser: (user: UpdateUserDTO) => Promise<User>
+  updateUser: (user: UpdateUserDTO) => Promise<User | null>
 }
