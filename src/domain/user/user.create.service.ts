@@ -8,6 +8,7 @@ import {
   type UserRepository,
   type UserWithoutPassword
 } from './repositories/UserRepository'
+import { MissingParamError } from '../../infra/errors/missingParamError'
 
 interface CreateResponseDTO {
   user: UserWithoutPassword
@@ -24,6 +25,10 @@ class CreateUserService {
     password,
     mobile
   }: CreateUserDTO): Promise<CreateResponseDTO> {
+    if (firstName === undefined || firstName === '') {
+      throw new MissingParamError('Missing param: firstName')
+    }
+
     const findUserEmail = await this.userRepository.findUserByEmail(email)
 
     if (findUserEmail !== null) {
