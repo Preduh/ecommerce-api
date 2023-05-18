@@ -9,7 +9,8 @@
     "start": "node ./dist/infra/main.js",
     "start:docker": "npm run build && npm run start",
     "build:render": "npm install && npx tsc && npx prisma migrate deploy",
-    "dev": "nodemon --legacy-watch --ignore ./node_modules ./src/infra/main.ts"
+    "dev": "nodemon --legacy-watch --ignore ./node_modules ./src/infra/main.ts",
+    "lint": "eslint ./src/**/*.ts --fix"
   },
   "keywords": [],
   "author": "",
