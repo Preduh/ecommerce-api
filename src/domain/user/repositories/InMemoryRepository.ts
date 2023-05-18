@@ -54,7 +54,8 @@ export class InMemoryUserRepository implements UserRepository {
     const user = await this.findUserById(id)
 
     if (user !== null) {
-      this.users.filter(user => user.id !== id)
+      const userIdx = this.users.findIndex(user => user.id === id)
+      this.users.splice(userIdx, 1)
     }
 
     return user ?? null
