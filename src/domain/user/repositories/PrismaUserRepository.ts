@@ -82,4 +82,30 @@ export class PrismaUserRepository implements UserRepository {
 
     return updatedUser
   }
+
+  async blockUser (id: string): Promise<User | null> {
+    const user = await prismaClient.user.update({
+      where: {
+        id
+      },
+      data: {
+        isBlocked: true
+      }
+    })
+
+    return user
+  }
+
+  async unblockUser (id: string): Promise<User | null> {
+    const user = await prismaClient.user.update({
+      where: {
+        id
+      },
+      data: {
+        isBlocked: false
+      }
+    })
+
+    return user
+  }
 }

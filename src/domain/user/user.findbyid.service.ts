@@ -21,6 +21,7 @@ class FindUserByIDService {
       lastName: findUser.lastName,
       mobile: findUser.mobile,
       role: findUser.role,
+      isBlocked: findUser.isBlocked,
       createdAt: findUser.createdAt,
       updatedAt: findUser.updatedAt
     }

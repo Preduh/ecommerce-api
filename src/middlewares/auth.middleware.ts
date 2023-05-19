@@ -35,7 +35,7 @@ class AuthMiddleware {
     next: NextFunction): Promise<Response<any, Record<string, any>> | undefined> {
     const role = response.locals.role
 
-    if (role !== 'user') {
+    if (role !== 'admin') {
       return response.status(401).json({ error: 'You are not an admin' })
     }
 

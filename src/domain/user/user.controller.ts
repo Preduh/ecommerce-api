@@ -7,6 +7,8 @@ import { FindUserByIDService } from './user.findbyid.service'
 import { LoginUserService } from './user.login.service'
 import { UpdateUserService } from './user.update.service'
 import { type HttpError } from '../../infra/errors/httpError'
+import { BlockUserService } from './user.block.service'
+import { UnblockUserService } from './user.unblock.service'
 
 class UserController {
   async create (
@@ -128,6 +130,44 @@ class UserController {
       const updatedUser = await updateUserService.execute({ id, ...body })
 
       return response.status(200).json(updatedUser)
+    } catch (error) {
+      const httpError: HttpError = error as HttpError
+
+      return response.status(httpError.status).json({ error: httpError.message })
+    }
+  }
+
+  async block (request: Request,
+    response: Response
+  ): Promise<Response<any, Record<string, any>>> {
+    const prismaUserRepository = new PrismaUserRepository()
+    const blockUserService = new BlockUserService(prismaUserRepository)
+
+    const { id } = request.params
+
+    try {
+      await blockUserService.execute(id)
+
+      return response.status(200).json({ message: 'User blocked' })
+    } catch (error) {
+      const httpError: HttpError = error as HttpError
+
+      return response.status(httpError.status).json({ error: httpError.message })
+    }
+  }
+
+  async unblock (request: Request,
+    response: Response
+  ): Promise<Response<any, Record<string, any>>> {
+    const prismaUserRepository = new PrismaUserRepository()
+    const unblockUserService = new UnblockUserService(prismaUserRepository)
+
+    const { id } = request.params
+
+    try {
+      await unblockUserService.execute(id)
+
+      return response.status(200).json({ message: 'User unblocked' })
     } catch (error) {
       const httpError: HttpError = error as HttpError
 

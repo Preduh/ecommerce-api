@@ -76,6 +76,7 @@ class CreateUserService {
         lastName: user.lastName,
         mobile: user.mobile,
         role: user.role,
+        isBlocked: user.isBlocked,
         createdAt: user.createdAt,
         updatedAt: user.updatedAt
       },

@@ -69,6 +69,7 @@ class UpdateUserService {
       lastName: updatedUser.lastName,
       mobile: updatedUser.mobile,
       role: updatedUser.role,
+      isBlocked: updatedUser.isBlocked,
       createdAt: updatedUser.createdAt,
       updatedAt: updatedUser.updatedAt
     }

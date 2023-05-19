@@ -8,6 +8,8 @@ export class InMemoryUserRepository implements UserRepository {
     email,
     firstName,
     lastName,
+    isBlocked,
+    role,
     mobile,
     password
   }: CreateUserDTO): Promise<User> {
@@ -15,7 +17,8 @@ export class InMemoryUserRepository implements UserRepository {
       id: uuid(),
       firstName,
       lastName,
-      role: 'user',
+      role: role ?? 'user',
+      isBlocked: isBlocked ?? false,
       email,
       mobile,
       password,
@@ -69,6 +72,32 @@ export class InMemoryUserRepository implements UserRepository {
     const newUser = await this.createUser({
       ...oldUser,
       ...user
+    })
+
+    return newUser
+  }
+
+  async blockUser (id: string): Promise<User | null> {
+    const oldUser = await this.deleteUser(id)
+
+    if (oldUser === null) return null
+
+    const newUser = await this.createUser({
+      ...oldUser,
+      isBlocked: true
+    })
+
+    return newUser
+  }
+
+  async unblockUser (id: string): Promise<User | null> {
+    const oldUser = await this.deleteUser(id)
+
+    if (oldUser === null) return null
+
+    const newUser = await this.createUser({
+      ...oldUser,
+      isBlocked: false
     })
 
     return newUser

@@ -5,6 +5,7 @@ export interface User {
   email: string
   mobile: string
   role: string
+  isBlocked: boolean
   password: string
   createdAt: Date
   updatedAt: Date
@@ -16,6 +17,8 @@ export interface CreateUserDTO {
   email: string
   mobile: string
   password: string
+  role?: string
+  isBlocked?: boolean
 }
 
 export interface UpdateUserDTO {
@@ -34,6 +37,7 @@ export interface UserWithoutPassword {
   email: string
   mobile: string
   role: string
+  isBlocked: boolean
   createdAt: Date
   updatedAt: Date
 }
@@ -46,4 +50,6 @@ export interface UserRepository {
   findUserById: (id: string) => Promise<User | null>
   deleteUser: (id: string) => Promise<User | null>
   updateUser: (user: UpdateUserDTO) => Promise<User | null>
+  blockUser: (id: string) => Promise<User | null>
+  unblockUser: (id: string) => Promise<User | null>
 }
