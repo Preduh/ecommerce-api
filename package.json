@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "test": "vitest",
-    "build": "npm run lint && rimraf dist && tsc --project tsconfig.build.json",
+    "build": "rimraf dist && tsc --project tsconfig.build.json",
     "start": "node ./dist/infra/main.js",
     "start:docker": "npm run build && npm run start",
     "build:render": "npm install && npm run build && npx prisma migrate deploy",
