@@ -121,7 +121,7 @@ class UserController {
     const prismaUserRepository = new PrismaUserRepository()
     const updateUserService = new UpdateUserService(prismaUserRepository)
 
-    const { id } = request.params
+    const { userId: id } = response.locals
     const { body } = request
 
     try {
