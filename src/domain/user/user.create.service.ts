@@ -64,7 +64,7 @@ class CreateUserService {
       password: hashedPassword
     })
 
-    const token = jwt.sign({ id: user.id }, jwtConfig.secret, {
+    const token = jwt.sign({ id: user.id, role: user.role }, jwtConfig.secret, {
       expiresIn: jwtConfig.expiresIn
     })
 

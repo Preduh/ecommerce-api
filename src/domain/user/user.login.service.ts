@@ -30,7 +30,7 @@ class LoginUserService {
       throw new NotFoundError('Email/Password is incorrect')
     }
 
-    const token = jwt.sign({ id: user.id }, jwtConfig.secret, {
+    const token = jwt.sign({ id: user.id, role: user.role }, jwtConfig.secret, {
       expiresIn: jwtConfig.expiresIn
     })
 

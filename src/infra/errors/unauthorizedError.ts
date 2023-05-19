@@ -1,13 +1,13 @@
 import { HttpError } from './httpError'
 
-class NotFoundError extends HttpError {
+class UnauthorizedError extends HttpError {
   constructor (message: string) {
     super(message)
 
     this.message = message
-    this.name = 'NotFound'
+    this.name = 'Unauthorized'
     this.status = 404
   }
 }
 
-export { NotFoundError }
+export { UnauthorizedError }
