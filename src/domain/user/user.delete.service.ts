@@ -23,6 +23,7 @@ class DeleteUserService {
       lastName: findUser.lastName,
       mobile: findUser.mobile,
       role: findUser.role,
+      refreshToken: findUser.refreshToken,
       isBlocked: findUser.isBlocked,
       createdAt: findUser.createdAt,
       updatedAt: findUser.updatedAt

@@ -38,6 +38,7 @@ class BlockUserService {
       mobile: blockUser.mobile,
       role: blockUser.role,
       isBlocked: blockUser.isBlocked,
+      refreshToken: findUser.refreshToken,
       createdAt: blockUser.createdAt,
       updatedAt: blockUser.updatedAt
     }

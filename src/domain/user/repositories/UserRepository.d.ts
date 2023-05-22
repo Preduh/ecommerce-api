@@ -7,6 +7,7 @@ export interface User {
   role: string
   isBlocked: boolean
   password: string
+  refreshToken: string | null
   createdAt: Date
   updatedAt: Date
 }
@@ -19,6 +20,7 @@ export interface CreateUserDTO {
   password: string
   role?: string
   isBlocked?: boolean
+  refreshToken: string | null
 }
 
 export interface UpdateUserDTO {
@@ -27,6 +29,7 @@ export interface UpdateUserDTO {
   lastName?: string
   email?: string
   mobile?: string
+  refreshToken?: string | null
 }
 
 // A user without your password
@@ -38,6 +41,7 @@ export interface UserWithoutPassword {
   mobile: string
   role: string
   isBlocked: boolean
+  refreshToken: string | null
   createdAt: Date
   updatedAt: Date
 }

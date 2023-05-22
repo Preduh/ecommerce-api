@@ -22,6 +22,7 @@ class FindUserByIDService {
       mobile: findUser.mobile,
       role: findUser.role,
       isBlocked: findUser.isBlocked,
+      refreshToken: findUser.refreshToken,
       createdAt: findUser.createdAt,
       updatedAt: findUser.updatedAt
     }

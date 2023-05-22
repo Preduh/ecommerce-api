@@ -11,14 +11,15 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  firstName String
-  lastName  String
-  email     String   @unique
-  mobile    String   @unique
-  password  String
-  role      String   @default("user")
-  isBlocked Boolean  @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
+  id           String   @id @default(uuid())
+  firstName    String
+  lastName     String
+  email        String   @unique
+  mobile       String   @unique
+  password     String
+  role         String   @default("user")
+  isBlocked    Boolean  @default(false)
+  refreshToken String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @default(now())
 }

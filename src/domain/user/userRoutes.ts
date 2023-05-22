@@ -6,12 +6,18 @@ const userRouter = Router()
 
 const authMiddleware = new AuthMiddleware()
 
+// Routes available to any user
 userRouter.post('/create', new UserController().create)
 userRouter.get('/findAll', new UserController().findAll)
 userRouter.post('/login', new UserController().login)
-userRouter.get('/:id', authMiddleware.validateToken, authMiddleware.isAdmin, new UserController().findById)
 userRouter.delete('/:id', new UserController().delete)
+userRouter.get('/refresh', new UserController().refreshToken)
+
+// Routes available to logged users
 userRouter.put('/editUser', authMiddleware.validateToken, new UserController().update)
+
+// Routes available to admin logged users
+userRouter.get('/:id', authMiddleware.validateToken, authMiddleware.isAdmin, new UserController().findById)
 userRouter.put('/blockUser/:id', authMiddleware.validateToken, authMiddleware.isAdmin, new UserController().block)
 userRouter.put('/unblockUser/:id', authMiddleware.validateToken, authMiddleware.isAdmin, new UserController().unblock)
 

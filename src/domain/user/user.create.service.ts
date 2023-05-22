@@ -35,6 +35,7 @@ class CreateUserService {
       firstName,
       lastName,
       password,
+      refreshToken,
       mobile
     } = userDTO
 
@@ -61,11 +62,12 @@ class CreateUserService {
       firstName,
       lastName,
       mobile,
+      refreshToken,
       password: hashedPassword
     })
 
     const token = jwt.sign({ id: user.id, role: user.role }, jwtConfig.secret, {
-      expiresIn: jwtConfig.expiresIn
+      expiresIn: jwtConfig.tokenExpiresIn
     })
 
     return {
@@ -76,6 +78,7 @@ class CreateUserService {
         lastName: user.lastName,
         mobile: user.mobile,
         role: user.role,
+        refreshToken: user.refreshToken,
         isBlocked: user.isBlocked,
         createdAt: user.createdAt,
         updatedAt: user.updatedAt

@@ -11,6 +11,7 @@ interface LoginUserDTO {
 
 interface LoginResponseDTO {
   user: UserWithoutPassword
+  refreshToken: string
   token: string
 }
 
@@ -31,7 +32,16 @@ class LoginUserService {
     }
 
     const token = jwt.sign({ id: user.id, role: user.role }, jwtConfig.secret, {
-      expiresIn: jwtConfig.expiresIn
+      expiresIn: jwtConfig.tokenExpiresIn
+    })
+
+    const refreshToken = jwt.sign({ id: user.id, role: user.role }, jwtConfig.refreshSecret, {
+      expiresIn: jwtConfig.refreshTokenExpiresIn
+    })
+
+    await this.userRepository.updateUser({
+      id: user.id,
+      refreshToken
     })
 
     return {
@@ -43,10 +53,12 @@ class LoginUserService {
         mobile: user.mobile,
         role: user.role,
         isBlocked: user.isBlocked,
+        refreshToken,
         createdAt: user.createdAt,
         updatedAt: user.updatedAt
       },
-      token
+      token,
+      refreshToken
     }
   }
 }

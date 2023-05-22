@@ -38,6 +38,7 @@ class UnblockUserService {
       mobile: unblockUser.mobile,
       role: unblockUser.role,
       isBlocked: unblockUser.isBlocked,
+      refreshToken: findUser.refreshToken,
       createdAt: unblockUser.createdAt,
       updatedAt: unblockUser.updatedAt
     }

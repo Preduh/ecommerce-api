@@ -1,14 +1,15 @@
 import { type Request, type Response } from 'express'
+import { type HttpError } from '../../infra/errors/httpError'
 import { PrismaUserRepository } from './repositories/PrismaUserRepository'
+import { BlockUserService } from './user.block.service'
 import { CreateUserService } from './user.create.service'
 import { DeleteUserService } from './user.delete.service'
 import { FindAllUserService } from './user.findall.service'
 import { FindUserByIDService } from './user.findbyid.service'
 import { LoginUserService } from './user.login.service'
-import { UpdateUserService } from './user.update.service'
-import { type HttpError } from '../../infra/errors/httpError'
-import { BlockUserService } from './user.block.service'
+import { RefreshTokenUserService } from './user.refreshToken.service'
 import { UnblockUserService } from './user.unblock.service'
+import { UpdateUserService } from './user.update.service'
 
 class UserController {
   async create (
@@ -26,6 +27,7 @@ class UserController {
         lastName,
         email,
         mobile,
+        refreshToken: null,
         password
       })
 
@@ -65,12 +67,17 @@ class UserController {
     const { email, password } = request.body
 
     try {
-      const user = await loginUserService.execute({
+      const { user, refreshToken, token } = await loginUserService.execute({
         email,
         password
       })
 
-      return response.status(200).json(user)
+      response.cookie('refreshToken', refreshToken, {
+        httpOnly: true,
+        maxAge: 72 * 60 * 60 * 1000
+      })
+
+      return response.status(200).json({ user, token })
     } catch (error) {
       const httpError: HttpError = error as HttpError
 
@@ -168,6 +175,23 @@ class UserController {
       await unblockUserService.execute(id)
 
       return response.status(200).json({ message: 'User unblocked' })
+    } catch (error) {
+      const httpError: HttpError = error as HttpError
+
+      return response.status(httpError.status).json({ error: httpError.message })
+    }
+  }
+
+  async refreshToken (request: Request,
+    response: Response
+  ): Promise<Response<any, Record<string, any>>> {
+    const prismaUserRepository = new PrismaUserRepository()
+    const refreshTokenUserService = new RefreshTokenUserService(prismaUserRepository)
+
+    try {
+      const { accessToken, refreshToken } = await refreshTokenUserService.execute(request.cookies.refreshToken)
+
+      return response.status(200).json({ accessToken, refreshToken })
     } catch (error) {
       const httpError: HttpError = error as HttpError
 

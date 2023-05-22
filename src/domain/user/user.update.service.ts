@@ -16,6 +16,7 @@ class UpdateUserService {
     firstName,
     lastName,
     mobile,
+    refreshToken,
     ...otherProperties
   }: UpdateUserDTO): Promise<UserWithoutPassword> {
     const invalidProperties = Object.keys(otherProperties)
@@ -70,6 +71,7 @@ class UpdateUserService {
       mobile: updatedUser.mobile,
       role: updatedUser.role,
       isBlocked: updatedUser.isBlocked,
+      refreshToken: updatedUser.refreshToken,
       createdAt: updatedUser.createdAt,
       updatedAt: updatedUser.updatedAt
     }

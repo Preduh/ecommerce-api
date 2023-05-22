@@ -1,4 +1,6 @@
 export const jwtConfig = {
   secret: process.env.JWT_SECRET ?? 'default secret',
-  expiresIn: '1d'
+  refreshSecret: process.env.JWT_REFRESH_SECRET ?? 'default refresh secret',
+  tokenExpiresIn: '1d',
+  refreshTokenExpiresIn: '3d'
 }
