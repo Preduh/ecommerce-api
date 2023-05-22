@@ -11,6 +11,7 @@ export class InMemoryUserRepository implements UserRepository {
     isBlocked,
     role,
     mobile,
+    refreshToken,
     password
   }: CreateUserDTO): Promise<User> {
     const user: User = {
@@ -22,6 +23,7 @@ export class InMemoryUserRepository implements UserRepository {
       email,
       mobile,
       password,
+      refreshToken,
       createdAt: new Date(),
       updatedAt: new Date()
     }
