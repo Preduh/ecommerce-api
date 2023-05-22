@@ -12,6 +12,7 @@ userRouter.get('/findAll', new UserController().findAll)
 userRouter.post('/login', new UserController().login)
 userRouter.delete('/:id', new UserController().delete)
 userRouter.get('/refresh', new UserController().refreshToken)
+userRouter.get('/logout', new UserController().logout)
 
 // Routes available to logged users
 userRouter.put('/editUser', authMiddleware.validateToken, new UserController().update)

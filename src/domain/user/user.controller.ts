@@ -10,6 +10,7 @@ import { LoginUserService } from './user.login.service'
 import { RefreshTokenUserService } from './user.refreshToken.service'
 import { UnblockUserService } from './user.unblock.service'
 import { UpdateUserService } from './user.update.service'
+import { LogoutUserService } from './user.logout.service'
 
 class UserController {
   async create (
@@ -192,6 +193,23 @@ class UserController {
       const { accessToken, refreshToken } = await refreshTokenUserService.execute(request.cookies.refreshToken)
 
       return response.status(200).json({ accessToken, refreshToken })
+    } catch (error) {
+      const httpError: HttpError = error as HttpError
+
+      return response.status(httpError.status).json({ error: httpError.message })
+    }
+  }
+
+  async logout (request: Request,
+    response: Response
+  ): Promise<Response<any, Record<string, any>>> {
+    const prismaUserRepository = new PrismaUserRepository()
+    const logoutUserService = new LogoutUserService(prismaUserRepository)
+
+    try {
+      await logoutUserService.execute(request, response)
+
+      return response.sendStatus(204)
     } catch (error) {
       const httpError: HttpError = error as HttpError
 
