@@ -8,7 +8,7 @@
     "build": "rimraf dist && tsc --project tsconfig.build.json",
     "start": "node ./dist/infra/main.js",
     "start:docker": "npm run build && npm run start",
-    "build:render": "npm install && npx prisma migrate deploy && npm run build",
+    "build:render": "npm install && npx prisma generate && npm run build",
     "dev": "nodemon --legacy-watch --ignore ./node_modules ./src/infra/main.ts",
     "lint": "eslint ./src/**/*.ts --fix",
     "prepare": "husky install",
