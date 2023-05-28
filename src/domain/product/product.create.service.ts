@@ -1,14 +1,23 @@
 import { AlreadyExistsError } from '../../infra/errors/alreadyExistsError'
 import { MissingParamError } from '../../infra/errors/missingParamError'
 import {
-  type CreateProductDTO,
   type Product,
   type ProductRepository
 } from './repositories/ProductRepository'
+import slugify from 'slugify'
+
+interface CreateProductDTO {
+  title: string
+  description: string
+  price: number
+  quantity: number
+  color: string
+  brand: string
+  sold: number
+}
 
 type ProductDTOKeys =
   | 'title'
-  | 'slug'
   | 'description'
   | 'price'
   | 'quantity'
@@ -31,8 +40,13 @@ class CreateProductService {
       }
     })
 
-    const { title, slug, description, price, quantity, color, brand, sold } =
+    const { title, description, price, quantity, color, brand, sold } =
       productDTO
+
+    const slug = slugify(title, {
+      lower: true,
+      trim: true
+    })
 
     const findProductSlug = await this.productRepository.findProductBySlug(slug)
 

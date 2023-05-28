@@ -15,13 +15,12 @@ class ProductController {
       prismaProductRepository
     )
 
-    const { title, slug, description, price, quantity, color, brand, sold } =
+    const { title, description, price, quantity, color, brand, sold } =
       request.body
 
     try {
       const product = await createProductService.execute({
         title,
-        slug,
         description,
         price,
         quantity,
