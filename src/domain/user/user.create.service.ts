@@ -39,10 +39,6 @@ class CreateUserService {
       mobile
     } = userDTO
 
-    if (firstName === undefined || firstName === '') {
-      throw new MissingParamError('Missing param: firstName')
-    }
-
     const findUserEmail = await this.userRepository.findUserByEmail(email)
 
     if (findUserEmail !== null) {
