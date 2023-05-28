@@ -53,4 +53,10 @@ export class PrismaProductRepository implements ProductRepository {
 
     return product
   }
+
+  async findAllProducts (): Promise<Product[]> {
+    const product = await prismaClient.product.findMany()
+
+    return product
+  }
 }

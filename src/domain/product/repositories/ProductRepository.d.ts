@@ -27,4 +27,5 @@ export interface ProductRepository {
   createProduct: (product: CreateProductDTO) => Promise<Product>
   findProductBySlug: (slug: string) => Promise<Product | null>
   findProductById: (id: string) => Promise<Product | null>
+  findAllProducts: () => Promise<Product[]>
 }

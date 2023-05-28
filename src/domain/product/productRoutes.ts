@@ -5,6 +5,7 @@ const productRouter = Router()
 
 // Routes available to any user
 productRouter.post('/create', new ProductController().create)
+productRouter.get('/findAll', new ProductController().findAll)
 productRouter.get('/:id', new ProductController().findById)
 
 export { productRouter }

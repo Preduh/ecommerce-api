@@ -21,11 +21,11 @@ class CreateProductService {
 
   async execute (productDTO: CreateProductDTO): Promise<Product> {
     Object.keys(productDTO).forEach((key) => {
-      const userDTOKeys = key as ProductDTOKeys
+      const productDTOKeys = key as ProductDTOKeys
 
       if (
-        productDTO[userDTOKeys] === undefined ||
-        productDTO[userDTOKeys] === ''
+        productDTO[productDTOKeys] === undefined ||
+        productDTO[productDTOKeys] === ''
       ) {
         throw new MissingParamError(`Missing param: ${key}`)
       }
