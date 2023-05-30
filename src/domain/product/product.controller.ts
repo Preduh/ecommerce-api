@@ -4,6 +4,7 @@ import { CreateProductService } from './product.create.service'
 import { FindAllProductService } from './product.findall.service'
 import { FindProductByIDService } from './product.findbyid.service'
 import { PrismaProductRepository } from './repositories/PrismaProductRepository'
+import { UpdateProductService } from './product.update.service'
 
 class ProductController {
   async create (
@@ -82,6 +83,26 @@ class ProductController {
       return response
         .status(httpError.status)
         .json({ error: httpError.message })
+    }
+  }
+
+  async update (request: Request,
+    response: Response
+  ): Promise<Response<any, Record<string, any>>> {
+    const prismaProductRepository = new PrismaProductRepository()
+    const updateProductService = new UpdateProductService(prismaProductRepository)
+
+    const { id } = request.params
+    const { body } = request
+
+    try {
+      const updatedProduct = await updateProductService.execute({ id, ...body })
+
+      return response.status(200).json(updatedProduct)
+    } catch (error) {
+      const httpError: HttpError = error as HttpError
+
+      return response.status(httpError.status).json({ error: httpError.message })
     }
   }
 }

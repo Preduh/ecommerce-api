@@ -1,6 +1,7 @@
 import { v4 as uuid } from 'uuid'
 import { prismaClient } from '../../../database/prismaClient'
 import {
+  type UpdateProductDTO,
   type CreateProductDTO,
   type Product,
   type ProductRepository
@@ -58,5 +59,18 @@ export class PrismaProductRepository implements ProductRepository {
     const product = await prismaClient.product.findMany()
 
     return product
+  }
+
+  async updateProduct (product: UpdateProductDTO): Promise<Product> {
+    const updatedProduct = await prismaClient.product.update({
+      where: {
+        id: product.id
+      },
+      data: {
+        ...product
+      }
+    })
+
+    return updatedProduct
   }
 }
