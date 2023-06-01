@@ -12,6 +12,7 @@ services:
     volumes:
       - postgresdb:/data/db
   backend:
+    container_name: ecommerce-api
     build: .
     depends_on:
       - postgres
