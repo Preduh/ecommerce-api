@@ -5,13 +5,26 @@ services:
     image: postgres:15.3-alpine3.18
     restart: always
     environment:
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_USER: postgres
       POSTGRES_DB: ecommerce
+      POSTGRES_HOST_AUTH_METHOD: trust
     ports:
       - 5432:5432
     volumes:
       - postgresdb:/data/db
+  backend:
+    build: .
+    depends_on:
+      - postgres
+    ports:
+      - 8080:8080
+      - 9229:9229 # debugger port
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    command: npm run start:docker
+    environment:
+      DATABASE_URL: postgres://postgres@postgres/ecommerce
+      PORT: 8080
 
 volumes:
   postgresdb:
